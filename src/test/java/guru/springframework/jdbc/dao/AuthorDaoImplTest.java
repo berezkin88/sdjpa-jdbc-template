@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("local")
 @DataJpaTest
-@ComponentScan(basePackages = {"com/example/sdjpajdbc/dao"})
+@ComponentScan(basePackages = {"guru/springframework/jdbc/dao"})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class AuthorDaoImplTest {
 
