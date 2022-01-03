@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -64,12 +66,12 @@ class AuthorDaoImplTest {
         var author = new Author();
         author.setLastName("B");
         author.setFirstName("Oleksandr");
-        var savedAuthor = authorDao.saveNewAuthor(author);
+        var savedAuthorId = authorDao.saveNewAuthor(author).getId();
 
-        authorDao.deleteAuthorById(savedAuthor.getId());
+        authorDao.deleteAuthorById(savedAuthorId);
 
-        var deletedAuthor = authorDao.getById(savedAuthor.getId());
-        assertThat(deletedAuthor).isNull();
+        assertThatThrownBy(() -> authorDao.getById(savedAuthorId))
+            .isExactlyInstanceOf(EmptyResultDataAccessException.class);
     }
 
 }
