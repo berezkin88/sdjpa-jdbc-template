@@ -12,10 +12,10 @@ public class BookMapper implements RowMapper<Book> {
     public Book mapRow(ResultSet resultSet, int i) throws SQLException {
         var book = new Book();
         book.setId(resultSet.getLong("id"));
-        book.setAuthorId(resultSet.getLong("author_id"));
         book.setIsbn(resultSet.getString("isbn"));
         book.setPublisher(resultSet.getString("publisher"));
         book.setTitle(resultSet.getString("title"));
+        book.setAuthorId(resultSet.getLong("author_id"));
 
         return book;
     }
